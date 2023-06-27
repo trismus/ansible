@@ -1,0 +1,26 @@
+--- 
+- hosts: Cent_Hosts 
+  vars: 
+    - sophos_tmp_dir: /tmp/Sophos_Installer 
+    - sophos_agent_download_url: api-cloudstation-eu-central-1.prod.hydra.sophos.com/api/download/61f0e83d9642031e53d0b848df77f467/
+    - downloaded_file_name: SophosSetup.sh 
+  tasks: 
+    - name: SOPHOS | Create Temporary Work Directory 
+      file: 
+        path: "{{ sophos_tmp_dir }}" 
+        state: directory 
+    - name: SOPHOS | Download Sophos Executable 
+       get_url: 
+           url: "{{ sophos_agent_download_url }}" 
+           dest: "{{ sophos_tmp_dir }}/{{ downloaded_file_name }}" 
+    - name: "SOPHOS | Making {{ downloaded_file_name }} executable" 
+       file: 
+          path: "{{ sophos_tmp_dir }}/{{ downloaded_file_name }}" 
+          mode: +x 
+     - name: Installing Sophos 
+       become: true 
+        command: sh "{{ sophos_tmp_dir }}/{{ downloaded_file_name }}" 
+     - name: SOPHOS | Delete sophos temp folder 
+       file: 
+         path: "{{ sophos_tmp_dir }}/" 
+         state: absent
