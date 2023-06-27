@@ -1,5 +1,5 @@
 --- 
-- hosts: Cent_Hosts 
+- hosts: all
   vars: 
     - sophos_tmp_dir: /tmp/Sophos_Installer 
     - sophos_agent_download_url: api-cloudstation-eu-central-1.prod.hydra.sophos.com/api/download/61f0e83d9642031e53d0b848df77f467/
